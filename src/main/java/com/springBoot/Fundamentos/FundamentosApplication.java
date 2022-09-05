@@ -61,6 +61,7 @@ public class FundamentosApplication implements CommandLineRunner {
 	}
 
 	private void getInformacionJpqlFromUser(){
+		/*
 		LOGGER.info("Usuario con el metodo findByUserEmail "
 				+ userRepository.findByUserEmail("cesar@at.com")
 				.orElseThrow(()->new RuntimeException("No se encontro el usuario")));
@@ -69,17 +70,36 @@ public class FundamentosApplication implements CommandLineRunner {
 				.stream()
 				.forEach(user -> LOGGER.info("User with method sort " + user));
 
+		userRepository.findByName("cuatro")
+				.stream().forEach(user -> LOGGER.info(user));
+
+		LOGGER.info("Usuario con query method "  +userRepository.findByEmailAndName("cesar@at.com", "Cesar")
+				.orElseThrow(()-> new RuntimeException("Usuario no encontrado")));
+
+		//LIKE
+		userRepository.findByNameLike("%c%")
+				.stream()
+				.forEach(user -> LOGGER.info("Usuario % LIKE " +user));
+
+		//OR
+		userRepository.findByNameOrEmail(null , "cesar@at.com")
+				.stream()
+				.forEach(user -> LOGGER.info("Usuario || OR  findByNameOrEmail " +user));
+		*/
+		//POR FECHA
+		userRepository.findByBirthDateBetween(LocalDate.of(2020 ,3, 4), LocalDate.of(2022,9,10))
+				.stream().forEach(user -> LOGGER.info("Fecha " + user));
 	}
 
 	private void saveUserInDatabase(){
 		User user = new User("Cesar", "cesar@at.com", LocalDate.of(2022,9,03));
-		User user2 = new User("Estiven", "estiven@at.com", LocalDate.of(2022,9,04));
-		User user3 = new User("tres", "tres@at.com", LocalDate.of(2022,9,03));
-		User user4 = new User("cuatro", "cuatro@at.com", LocalDate.of(2022,9,04));
-		User user5 = new User("cinco", "cinco@at.com", LocalDate.of(2022,9,05));
-		User user6 = new User("seis", "seis@at.com", LocalDate.of(2022,9,06));
-		User user7 = new User("siete", "siete@at.com", LocalDate.of(2022,9,07));
-		User user8 = new User("ocho", "ocho@at.com", LocalDate.of(2022,9,9));
+		User user2 = new User("cuatro", "estiven@at.com", LocalDate.of(2022,9,04));
+		User user3 = new User("tres", "tres@at.com", LocalDate.of(2016,9,03));
+		User user4 = new User("cuatro", "cuatro@at.com", LocalDate.of(2017,9,04));
+		User user5 = new User("cinco", "cinco@at.com", LocalDate.of(2018,9,05));
+		User user6 = new User("seis", "seis@at.com", LocalDate.of(2019,9,06));
+		User user7 = new User("siete", "siete@at.com", LocalDate.of(2020,9,07));
+		User user8 = new User("ocho", "ocho@at.com", LocalDate.of(2021,9,9));
 		List<User> list = Arrays.asList(user, user2, user3,user4, user5, user6,user7, user8);
 		//userRepository.saveAll(list);
 		list.stream().forEach(userRepository::save);
